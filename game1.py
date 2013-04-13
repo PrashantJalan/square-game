@@ -1,3 +1,5 @@
+#Initial grid is being made
+
 import pygame
 from pygame.locals import *
 import sys

@@ -1,3 +1,5 @@
+#Code submitted for midterm report
+
 import pygame
 from pygame.locals import *
 import sys

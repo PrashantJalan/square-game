@@ -1,3 +1,5 @@
+#With working one time mouse clicks. Now need to implement on server
+
 import pygame
 from pygame.locals import *
 import sys
