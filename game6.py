@@ -211,6 +211,8 @@ def start_screen (screen):
 	global total_player
 	global n
 	
+	fontobject0 = pygame.font.Font(None, 30)
+		
 	# Background load
 	background = pygame.transform.scale(background, (800,600))
 	screen = pygame.display.set_mode(background.get_size())
@@ -252,16 +254,32 @@ def start_screen (screen):
 	screen.blit(man_4,[player_4[0]+50,player_4[1]+40])	
 	screen.blit(man_4,[player_4[0]+70,player_4[1]+40])
 	
+	small = [270,180]
+	center_small = [small[0]+64, small[1]+64]
+	radius_small = 60
+	n = 5
+	screen.blit(player_button2, small)
+	screen.blit(fontobject0.render("Small", 1, BLACK),(small[0]+35, small[1]+37))
+	screen.blit(fontobject0.render("grid", 1, BLACK),(small[0]+42, small[1]+63))	
 	
+	medium = [440, 180]
+	center_medium = [medium[0]+64, medium[1]+64]
+	radius_medium = 60
+	screen.blit(player_button, medium)
+	screen.blit(fontobject0.render("Medium", 1, BLACK),(medium[0]+25, medium[1]+37))
+	screen.blit(fontobject0.render("grid", 1, BLACK),(medium[0]+42, medium[1]+63))
+	
+	large = [610, 180]
+	center_large = [large[0]+64, large[1]+64]
+	radius_large = 60
+	screen.blit(player_button, large)
+	screen.blit(fontobject0.render("Large", 1, BLACK),(large[0]+33, large[1]+37))
+	screen.blit(fontobject0.render("grid", 1, BLACK),(large[0]+42, large[1]+63))	
 	
 	#SquareX
 	fontobject = pygame.font.Font(None,60)
 	screen.blit(fontobject.render("SquareX", 1, GRAY),((screen.get_width() / 2)-100, 40))
 	
-	#The size of the grid
-	n = 7
-
-
 	while True:
 		#Printing the icons
 		screen.blit(man_4,[player_4[0]+10,player_4[1]+40])
@@ -273,6 +291,14 @@ def start_screen (screen):
 		screen.blit(man_3,[player_3[0]+10,player_3[1]+37])
 		screen.blit(man_2,[player_2[0]+47,player_2[1]+35])
 		screen.blit(man_2,[player_2[0]+17,player_2[1]+35])
+
+		screen.blit(fontobject0.render("Large", 1, BLACK),(large[0]+33, large[1]+37))
+		screen.blit(fontobject0.render("grid", 1, BLACK),(large[0]+42, large[1]+63))
+		screen.blit(fontobject0.render("Medium", 1, BLACK),(medium[0]+25, medium[1]+37))
+		screen.blit(fontobject0.render("grid", 1, BLACK),(medium[0]+42, medium[1]+63))
+		screen.blit(fontobject0.render("Small", 1, BLACK),(small[0]+35, small[1]+37))
+		screen.blit(fontobject0.render("grid", 1, BLACK),(small[0]+42, small[1]+63))
+		n= 7
 	
 		for event in pygame.event.get():
 			#For the exit button
@@ -286,6 +312,9 @@ def start_screen (screen):
 				dist_2 = math.sqrt((pos[0]-center_2[0])**2 + (pos[1]-center_2[1])**2)
 				dist_3 = math.sqrt((pos[0]-center_3[0])**2 + (pos[1]-center_3[1])**2)
 				dist_4 = math.sqrt((pos[0]-center_4[0])**2 + (pos[1]-center_4[1])**2)
+				dist_small = math.sqrt((pos[0]-center_small[0])**2 + (pos[1]-center_small[1])**2)
+				dist_medium = math.sqrt((pos[0]-center_medium[0])**2 + (pos[1]-center_medium[1])**2)
+				dist_large = math.sqrt((pos[0]-center_large[0])**2 + (pos[1]-center_large[1])**2)
 				
 				if dist_2<=radius_2:
 					screen.blit(player_button2,player_2)
@@ -304,7 +333,21 @@ def start_screen (screen):
 					total_player = 4
 				elif dist_s<=radius_s:
 					game_started(screen)
-			
+				elif dist_small<=radius_small:
+					screen.blit(player_button2, small)
+					screen.blit(player_button, medium)
+					screen.blit(player_button, large)
+				#	n = 5
+				elif dist_medium<=radius_medium:
+					screen.blit(player_button2, medium)
+					screen.blit(player_button, small)
+					screen.blit(player_button, large)
+				#	n = 7
+				elif dist_large<=radius_large:
+					screen.blit(player_button2, large)
+					screen.blit(player_button, medium)
+					screen.blit(player_button, small)
+				#	n = 11
 						
 		pygame.display.update()
 		clk.tick(fps)
@@ -313,6 +356,7 @@ def start_screen (screen):
 def game_started (screen):
 	global col
 	global background
+	global n
 	
 	screen.fill(WHITE)
 	background = pygame.transform.scale(background, (start_x*2+line_length*n,start_x*2+line_length*n))
